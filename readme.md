@@ -2,18 +2,18 @@
 
 # INTRODUCTION
 
-This example project showcases the setup and use of the new CAN FD module on the PIC18FQ84 family of devices, specifically the use of MCC to set up Baud Rate, receive masks/filters, and to handle the receive/transmit FIFOs.  The code periodically transmits CAN frames on a 1 second interval, echoes incoming messages with a specific message ID, and sets LEDs based on data with a different specific message ID.  
+This example project showcases the setup and use of the new CAN FD module on the PIC18-Q84 family of devices, specifically the use of MPLAB Code Configurator (MCC) to set up Baud Rate, receive masks/filters, and to handle the receive/transmit FIFOs.  The code periodically transmits CAN frames on a 1 second interval, echoes incoming messages with a specific message ID, and sets LEDs based on data with a different specific message ID.  
 
 ## Related Documentation
 
-This project is related to [TBXXXX]()
+A Technical Brief explaining the details of the new CAN FD module will be published soon.
 
 ## Software Used
-     - MPLAB® X IDE 5.40 or newer [(microchip.com/mplab/mplab-x-ide)](http://www.microchip.com/mplab/mplab-x-ide)
-     - MPLAB® XC8 2.20 or a newer compiler [(microchip.com/mplab/compilers)](http://www.microchip.com/mplab/compilers)
-     - MPLAB® Code Configurator (MCC) 3.95.0 or newer [(microchip.com/mplab/mplab-code-configurator)](https://www.microchip.com/mplab/mplab-code-configurator)
-     - MPLAB® Code Configurator (MCC) Device Libraries PIC10 / PIC12 / PIC16 / PIC18 MCUs 1.81.1 or newer [(microchip.com/mplab/mplab-code-configurator)](https://www.microchip.com/mplab/mplab-code-configurator)
-     - Microchip PIC18F-Q Series Device Support (1.6.129) or newer [(packs.download.microchip.com/)](https://packs.download.microchip.com/)
+- MPLAB® X IDE 5.40 or newer [(microchip.com/mplab/mplab-x-ide)](http://www.microchip.com/mplab/mplab-x-ide)
+- MPLAB® XC8 2.20 or a newer compiler [(microchip.com/mplab/compilers)](http://www.microchip.com/mplab/compilers)
+- MPLAB® Code Configurator (MCC) 3.95.0 or newer [(microchip.com/mplab/mplab-code-configurator)](https://www.microchip.com/mplab/mplab-code-configurator)
+- MPLAB® Code Configurator (MCC) Device Libraries PIC10 / PIC12 / PIC16 / PIC18 MCUs 1.81.1 or newer [(microchip.com/mplab/mplab-code-configurator)](https://www.microchip.com/mplab/mplab-code-configurator)
+- Microchip PIC18F-Q Series Device Support (1.6.129) or newer [(packs.download.microchip.com/)](https://packs.download.microchip.com/)
 
 ## Hardware Used
   - [PIC18F47Q84 Microcontroller](https://www.microchip.com/wwwproducts/en/PIC18F47Q84)
@@ -24,18 +24,24 @@ This project is related to [TBXXXX]()
 ## Setup
 
 The Curiosity HPC Board is used in conjunction with the ATA6563 click board as the development platform.  In addition, two jumper wires are used, one connecting  as the PIC18F47Q84 CAN FD PPS selections do not match the options available for the click board connections on the Curiosity HPC Board.  In addition, some form of CAN FD capable CAN bus analyzer is needed to view the outgoing CAN frames and send incoming CAN frames to the device (the K2L MOCCA FD was used for internal testing of this setup).
+
 #### Hardware Setup Images:
-<img src="images/Hardware Image.jpg" alt="Hardware Setup"/>
+<img src="images/Hardware Image 2.jpg" alt="Hardware Setup"/>
 
 The project software was developed in MPLAB X with the help of the MPLAB Code Configurator (MCC) plug-in tool.  The MCC tool provides a user-friendly interface that generates software based on the user’s parameters. MCC allows developers who may not be familiar with a new peripheral a way to quickly set up and test a peripheral without having to dive deep into the device datasheet. For this project, the MCC tool was used to generate code for both the CAN FD baud rate, masks, filters, and Transmit/Receive FIFO handling, as well as the Timer0 module for timing the CAN FD transmissions.  The CAN FD Receive interrupt initial setup was also performed using MCC, with the behavior of the interrupt routines being configured in code.  
+
 ### System Configuration:
 The system is set up to use HFINTOSC at 32MHz.  This is purely for demonstration purposes as the Curiosity HPC board does not have an external oscillator at the proper frequency.  For actual CAN FD applications it is highly recommended to use either an external clock module at 40Mhz (EXTOSC mode with EC above 8Mhz), an external crystal at 10MHz or 20Mhz (EXTOSC with HS above 8Mhz) or an external crystal at 10Mhz with the 4x PLL enabled (EXTOSC 4X PLL with HS above 8MHz).  The MCC setup makes these changes quick and easy, and will alter both the TMR0 and CAN FD baud rate setup to match any changes to the source clock.  
+
 #### MCC System Module Editor Window and Code:
 <img src="images/System Module Easy Setup.png" alt="System Module Easy Setup"/>
+
 ### TMR0 Configuration:
 The TMR0 module was configured such that it would interrupt at a 1Hz, so that the periodic CAN FD messages would be sent once per second.  
+
 #### MCC TMR0 Editor Window and Code:
 <img src="images/TMR0 Easy Setup.png" alt="TMR0 Easy Setup"/>
+
 ```c
 void TMR0_Initialize(void)
 {
@@ -66,8 +72,10 @@ void TMR0_Initialize(void)
 
 ### PORT and PPS Configuration:
 PORTA[4-7] are configured initially as output low, as those pins are connected to the LEDs for output of incoming CAN FD data.  PORTD6 is configured as CANTX and PORTD7 is configured as CANRX.
+
 #### MCC PORT Editor Window and Code:
 <img src="images/Pin Module Setup.png" alt="Pin Module Setup"/>
+
 ```c
 void PIN_MANAGER_Initialize(void)
 {
@@ -138,11 +146,14 @@ void PIN_MANAGER_Initialize(void)
     RD6PPS = 0x46;   //RD6->CAN1:CANTX;    
 }
 ```
+
 ### CAN FD Configuration:
 The CAN FD easy setup has 5 sections.  The first is clock setup.  For this setup, the system clock is used, so system clock is selected.  This will automatically populate the clock frequency (FCAN) window.  
 <img src="images/Step 1 Clock Settings.png" alt="CAN FD Clock Settings"/>
+
 The second step is Bit Rate Settings.  This configures the nominal and data bit rate (if applicable) based on FCAN.  For this example, a 500 Kbps nominal rate and 2Mbps data rate are selected, the nominal bit rate having 64 TQs per bit, the data bit rate having 16 TQs per bit, and the sample point being 75% for both bit rates.
 <img src="images/Step 2 Bit Rate Settings.png" alt="CAN FD Bit Rate Settings"/>
+
 ```c
 static void CAN1_BitRateConfiguration(void)
 {
@@ -179,8 +190,10 @@ static void CAN1_BitRateConfiguration(void)
 ```
 The third step is general settings.  This only has two options: Enable ISO CRC and Enable Error Interrupt.  The ISO CRC is a standard for CAN FD and is in enabled for this example, but some older CAN FD devices/buses may use the non-ISO CRC.  The Error Interrupt is for potential issues on messages/buses, and is not used in this demonstration.  
 <img src="images/Step 3 General Settings.png" alt="CAN FD General Settings"/>
+
 The fourth step is the FIFO settings.  Here is where the transmit and receive FIFOs are set up.  It allows for setting up depth, payload size, and TX/RX selection for each FIFO, while showing how much of the FIFO space is being consumed by the currently selected FIFOs.  In addition, this allows for selecting specific interrupt triggers for each FIFO which will generate the function prototypes/pointers for these interrupts in the code.  In this example, the TXQ is used as the transmit FIFO, with FIFO1 and FIFO2 being set as receive.  All three are set to a depth of 6 and a payload of 32 bytes, with both receive FIFOs set to interrupt on not-empty.  
 <img src="images/Step 4 FIFO Settings.png" alt="CAN FD FIFO Settings"/>
+
 ```c
 static void CAN1_RX_FIFO_Configuration(void)
 {
@@ -237,6 +250,7 @@ static void CAN1_TX_FIFO_Configuration(void)
 ```
 The final step is the Filter Object Settings.  This allows for setup of masks and filters, which determine which message IDs are accepted.  Each filter object can be associated with a specific receive FIFO and any number of message IDs can be entered, which will automatically set up the masks/filters to accept those IDs.  
 <img src="images/Step 5 Filter Object Settings.png" alt="CAN FD Filter Object Settings"/>
+
 ```c
 static void CAN1_RX_FIFO_FilterMaskConfiguration(void)
 {
@@ -265,9 +279,6 @@ static void CAN1_RX_FIFO_FilterMaskConfiguration(void)
 }
 ```
 In addition to the generated code, the two receive interrupts and the TMR0 interrupt were written using the generated CAN FD APIs.  
-```c
-
-```
 
 ```c
 static void DefaultFIFO1NotEmptyHandler(void)
@@ -290,6 +301,7 @@ if(CAN_TX_FIFO_AVAILABLE == (CAN1_TransmitFIFOStatusGet(TXQ) & CAN_TX_FIFO_AVAIL
     }
 }
 ```
+```c
 void TMR0_DefaultInterruptHandler(void){
     CAN_MSG_OBJ Transmission;  //create the CAN message object
     uint8_t Transmit_Data[8]={0x00,0x11,0x22,0x33,0x44,0x55,0x66,0x77}; // data bytes
@@ -328,12 +340,15 @@ static void DefaultFIFO2NotEmptyHandler(void)
 ```
 ## Operation
 
-On Power up, the code will periodically transmit messages with an ID of xxx and data of xxx every 1 second.
+On Power up, the code will periodically transmit messages with an ID of 0x100 and 8 bytes of data every 1 second.
 <img src="images/CANPeriod.png" alt="CAN Periodic Transmission"/>
+
 Sending a message with an ID of 0x111 will cause the device to respond with an echo frame with an ID of 0x222 and identical data frames
 <img src="images/CANEcho.png" alt="CAN Echo Transmission"/>
+
 Sending a message with an ID of 0x585 will cause the device to divide the value of the first data byte by 32, then use that result to determine which of the data bytes to display.  It will then display the 4 least significant bits of that data byte on the LEDs on the Curiosity Board
 <img src="images/CANActivities.png" alt="CAN Activities"/>
+
 ## Summary
 
 This Demo gives basic examples of using MCC to perform CAN FD bit rate setup, message transmission, and message reception with both filtering and interrupt-driven responses.
