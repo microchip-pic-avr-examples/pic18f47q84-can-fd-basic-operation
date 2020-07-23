@@ -3,28 +3,28 @@
     "category": "com.microchip.ide.project",
     "content": {
         "metaDataVersion": "1.1.0",
-        "name": "com.microchip.mcu8.mplabx.project.",
-        "version": " ",
-        "displayName": "  ",
-        "projectName": "",
-        "shortDescription": "",
+        "name": "com.microchip.mcu8.mplabx.project.pic18f47q84-can-fd-basic-operation",
+        "version": "1.0.0",
+        "displayName": "CAN FD basic operation example using the PIC18F47Q84",
+        "projectName": "pic18f47q84-can-fd-basic-operation",
+        "shortDescription": "PIC18F47Q84 Basic CAN FD Operation",
         "ide": {
-            "name": "",
-            "semverRange": ""
+            "name": "MPLABX",
+            "semverRange": ">=5.40.0"
         },
         "compiler": [
 			{
-				"name": "",
-				"semverRange": ""
+				"name": "XC8",
+				"semverRange": "^2.20.0"
 			}
 		],
         "dfp": {
-            "name": "",
-            "semverRange": ""
+            "name": "PIC18F-Q_DFP",
+            "semverRange": "^1.5.124"
         },
         "configurator": {
-            "name": "",
-            "semverRange": ""
+            "name": "MCC",
+            "semverRange": ">=3.95.0"
         },
         "device": {
             "metaDataVersion": "1.0.0",
@@ -32,26 +32,26 @@
             "content": {
                 "metaDataVersion": "1.0.0",
                 "category": "com.microchip.device",
-                "name": "",
+                "name": "PIC18F47Q84",
                 "versionRange": "*"
             }
         },
         "author": "",
         "subcategories": [
-            "",
+            "MCC",
             [
-               "Peripherals", ""
+               "Peripherals", "CAN FD"
             ],
             [
-               "Peripherals", ""
-            ]            			
+               "Peripherals", "TIMER"
+            ]       			
         ],
         "peripherals": [
-            "",""
+            "CAN FD","TIMER"
         ],
         "keywords": [
-            "",
-            ""			
+            "PIC18",
+            "MCC"		
         ],
 		"additionalData": {
 			"longDescription": {
