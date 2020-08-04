@@ -17,7 +17,7 @@ A Technical Brief explaining the details of the new CAN FD module will be publis
 
 ## Hardware Used
   - [PIC18F47Q84 Microcontroller](https://www.microchip.com/wwwproducts/en/PIC18F47Q84)
-  - [Curiosity High Pin Count (HPC) Development Board](https://www.microchip.com/developmenttools/ProductDetails/PartNO/DM164136)
+  - [Curiosity High Pin Count (HPC) Development Board - Rev2](https://www.microchip.com/developmenttools/ProductDetails/PartNO/DM164136)
   - [ATA6563 Click Board](https://www.mikroe.com/ata6563-click)
   - [K2L Optolyzer® MOCCA FD](https://www.k2l.de/products/39/OptoLyzer%C2%AE%20MOCCA%20FD/)
 
