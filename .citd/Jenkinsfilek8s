@@ -1,4 +1,5 @@
 // Jenkinsfile v2.0.0
+
 pipeline {
     agent {
         kubernetes {
@@ -15,8 +16,8 @@ pipeline {
 	
 	environment {
 		GITHUB_OWNER = 'microchip-pic-avr-examples'	
-		GITHUB_URL ='https://github.com/microchip-pic-avr-examples/pic18f47q84-can-fd-basic-operation'
-		BITBUCKET_URL = 'https://bitbucket.microchip.com/scm/ebe/pic18f47q84-can-fd-basic-operation.git'
+		GITHUB_URL ='https://github.com/microchip-pic-avr-examples/pic18f56q24-curiosity-mvio-i2c-mplab-mcc'
+		BITBUCKET_URL = 'https://bitbucket.microchip.com/scm/ebe/pic18f56q24-curiosity-mvio-i2c-mplab-mcc.git'
 		SEMVER_REGEX = '^(0|[1-9]\\d*)+\\.(0|[1-9]\\d*)+\\.(0|[1-9]\\d*)+$'
 		ARTIFACTORY_SERVER = 'https://artifacts.microchip.com:7999/artifactory'
 	}	
