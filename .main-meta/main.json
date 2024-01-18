@@ -3,7 +3,7 @@
     "category": "com.microchip.ide.project",
     "content": {
         "metaDataVersion": "1.3.0",
-        "name": "com.microchip.mcu8.mplabx.project.pic18f47q84-can-fd-basic-operation",
+	"name": "com.microchip.mcu8.mplabx.project.pic18f47q84-can-fd-basic-operation",
         "version": "1.0.0",
         "displayName": "CAN FD basic operation example using the PIC18F47Q84",
         "projectName": "pic18f47q84-can-fd-basic-operation",
