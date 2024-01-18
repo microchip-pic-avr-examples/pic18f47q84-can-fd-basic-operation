@@ -9,7 +9,7 @@
         "projectName": "pic18f47q84-can-fd-basic-operation",
         "shortDescription": "PIC18F47Q84 Basic CAN FD Operation",
         "ide": {
-            "name": "MPLABX",
+            "name": "MPLAB X",
             "semverRange": ">=6.15.0"
         },
         "compiler": [
@@ -38,10 +38,10 @@
         },
         "author": "Microchip",
         "peripherals": [
-            "CAN FD","TIMER"
+            "CAN FD","TMR", "TMR0"
         ],
         "keywords": [
-            "PIC18",
+	    "CAN FD",
             "MCC"		
         ],
 		"additionalData": {
